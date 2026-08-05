@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Precision Compass - Authentication Portal</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#D4AF37", // Gold
+              "background-light": "#f8f8f6",
+              "background-dark": "#0B272C", // Deep Teal
+              "surface": "#153940", // Lighter Teal
+              "text-main": "#F5F7F7", // Off-white
+              "muted": "#4A6D73", // Slate Teal
+              "accent": "#E6C96C", // Bright Gold
+              "error": "#D45B37",
+            },
+            fontFamily: {
+              "display": ["Outfit", "sans-serif"],
+              "heading": ["Cormorant Garamond", "serif"],
+              "body": ["Outfit", "sans-serif"],
+            },
+            borderRadius: {
+              "DEFAULT": "0.125rem", 
+              "sm": "0.125rem", // Aligning with the theme requirements but keeping sharp aesthetics
+              "lg": "0.25rem", 
+              "xl": "0.5rem", 
+              "full": "0.75rem"
+            },
+            animation: {
+              'orbit': 'spin 30s linear infinite',
+              'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom styles for specific PRD interactions */
+        .input-group {
+            position: relative;
+            padding-top: 20px;
+        }
+
+        .minimal-input {
+            width: 100%;
+            height: 48px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid theme('colors.muted');
+            color: theme('colors.text-main');
+            font-family: theme('fontFamily.body');
+            font-size: 16px;
+            padding: 8px 0;
+            transition: border-color 0.3s ease;
+        }
+        
+        .minimal-input:focus {
+            outline: none;
+            box-shadow: none;
+            border-bottom: 2px solid theme('colors.primary');
+        }
+        
+        .minimal-input.error {
+            border-bottom: 2px solid theme('colors.error');
+        }
+
+        .floating-label {
+            position: absolute;
+            top: 28px; /* align with input padding */
+            left: 0;
+            color: theme('colors.muted');
+            font-family: theme('fontFamily.body');
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.2s ease-out;
+        }
+
+        /* Float the label when input is focused or has value */
+        .minimal-input:focus ~ .floating-label,
+        .minimal-input:not(:placeholder-shown) ~ .floating-label {
+            top: 0px;
+            font-size: 12px;
+            color: theme('colors.primary');
+        }
+
+        .minimal-input.error:focus ~ .floating-label,
+        .minimal-input.error:not(:placeholder-shown) ~ .floating-label {
+             color: theme('colors.error');
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            border: 1px solid theme('colors.primary');
+            color: theme('colors.primary');
+            font-family: theme('fontFamily.body');
+            font-weight: 400;
+            font-size: 14px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: theme('colors.primary');
+            color: theme('colors.background-dark');
+        }
+
+        /* Compass Background Grid */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-text-main font-body h-screen w-screen overflow-hidden antialiased">
+<!-- Desktop Only Split Layout -->
+<div class="flex h-full w-full flex-col lg:flex-row">
+<!-- Left Pane: Brand Immersion (60%) -->
+<div class="hidden lg:flex w-full lg:w-[50%] bg-background-dark relative flex-col items-center justify-center overflow-hidden border-r border-primary/20">
+<!-- Geometric Grid Background -->
+<div class="absolute inset-0 bg-grid opacity-70"></div>
+<!-- Fading Edges for the grid -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_20%,_var(--tw-gradient-stops))] from-transparent via-background-dark/50 to-background-dark"></div>
+<!-- Brand Content Container -->
+<div class="relative z-10 flex flex-col items-center">
+<!-- Deconstructed SVG Compass Logo -->
+<div class="relative w-80 h-80 mb-12 flex items-center justify-center">
+<!-- Outer Coordinate Ring -->
+<svg class="absolute z-10 w-full h-full text-primary/30 animate-[spin_60s_linear_infinite]" fill="none" stroke="currentColor" stroke-width="0.5" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="45" stroke-dasharray="1 6"></circle>
+<!-- Tick marks -->
+<path d="M50 0 L50 4 M50 96 L50 100 M0 50 L4 50 M96 50 L100 50" stroke-dasharray="2 2" stroke-width="1"></path>
+</svg>
+<!-- Diagonal Axes -->
+<svg class="absolute z-10 w-full h-full text-primary/20" fill="none" stroke="currentColor" stroke-width="0.5" viewbox="0 0 100 100">
+<path d="M15 15 L85 85 M15 85 L85 15" stroke-dasharray="2 4"></path>
+</svg>
+<!-- Inner Broken Star -->
+<svg class="absolute z-20 w-32 h-32 text-primary animate-pulse-slow" fill="none" stroke="currentColor" stroke-width="1" viewbox="0 0 100 100">
+<!-- Top point -->
+<path d="M50 10 L55 45 L50 50" stroke-dasharray="4 2"></path>
+<path d="M50 10 L45 45 L50 50" stroke-dasharray="2 4"></path>
+<!-- Right point -->
+<path d="M90 50 L55 45 L50 50" stroke-dasharray="3 3"></path>
+<path d="M90 50 L55 55 L50 50" stroke-dasharray="1 2"></path>
+<!-- Bottom point -->
+<path d="M50 90 L45 55 L50 50" stroke-dasharray="5 1"></path>
+<path d="M50 90 L55 55 L50 50" stroke-dasharray="2 2"></path>
+<!-- Left point -->
+<path d="M10 50 L45 55 L50 50" stroke-dasharray="4 4"></path>
+<path d="M10 50 L45 45 L50 50" stroke-dasharray="1 3"></path>
+<!-- Central Node -->
+<circle cx="50" cy="50" fill="currentColor" r="2"></circle>
+</svg>
+<!-- Rotating Measurement Circles -->
+<svg class="absolute z-10 w-48 h-48 text-primary/40 animate-[spin_40s_linear_infinite_reverse]" fill="none" stroke="currentColor" stroke-width="0.5" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="30" stroke-dasharray="8 4"></circle>
+<circle cx="50" cy="50" r="20" stroke-dasharray="2 6"></circle>
+</svg>
+</div>
+<!-- Brand Typography -->
+<div class="text-center mt-8">
+<h1 class="font-heading text-4xl tracking-[0.2em] text-primary uppercase font-light">Hina Ajaz</h1>
+<p class="font-display text-sm tracking-[0.3em] text-muted mt-4 uppercase">Architectural Coordinates</p>
+</div>
+</div>
+</div>
+<!-- Right Pane: Login Form (40% on Desktop, 100% on Mobile/Tablet) -->
+<div class="w-full lg:w-[50%] h-full flex flex-col justify-center px-8 sm:px-16 lg:px-32 bg-background-dark relative">
+<div class="max-w-md w-full mx-auto z-10">
+<div class="mb-12">
+<h2 class="font-heading text-3xl text-text-main mb-2">System Access</h2>
+<p class="text-muted font-body text-sm">Enter your credentials to establish connection.</p>
+</div>
+<form class="space-y-8">
+<div class="input-group">
+<input class="minimal-input peer" id="email" placeholder=" " required="" type="email"/>
+<label class="floating-label" for="email">Identification (Email)</label>
+</div>
+<div class="input-group">
+<input class="minimal-input peer" id="password" placeholder=" " required="" type="password"/>
+<label class="floating-label" for="password">Security Code (Password)</label>
+</div>
+<div class="flex items-center justify-between pt-4">
+<div class="flex items-center">
+<input class="h-4 w-4 rounded-sm border-muted bg-transparent text-primary focus:ring-primary focus:ring-offset-background-dark" id="remember" type="checkbox"/>
+<label class="ml-2 block text-sm text-muted font-body" for="remember">Retain connection</label>
+</div>
+<div class="text-sm">
+<a class="font-medium text-primary hover:text-accent transition-colors" href="#">Recover code</a>
+</div>
+</div>
+<div>
+<button class="w-full btn-primary py-4 rounded-sm flex items-center justify-center space-x-2 group" type="submit">
+<span>Initialize Sequence</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
+                        arrow_forward
+                    </span>
+</button>
+</div>
+</form>
+<div class="mt-16 text-center">
+<p class="text-sm text-muted">
+                Unregistered node? <a class="font-medium text-primary hover:text-accent transition-colors" href="#">Request Access</a>
+</p>
+</div>
+</div>
+<!-- Subtle corner accents for the form side -->
+<div class="absolute top-8 right-8 w-16 h-16 border-t border-r border-primary/20 pointer-events-none hidden lg:block"></div>
+<div class="absolute bottom-8 right-8 w-16 h-16 border-b border-r border-primary/20 pointer-events-none hidden lg:block"></div>
+</div>
+</div>
+</body></html>

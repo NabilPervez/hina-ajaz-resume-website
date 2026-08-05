@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Precision Compass - Telemetry Portal</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#D4AF37", // Executive Gold
+              "background-light": "#f8f8f6",
+              "background-dark": "#0B272C", // Deep Teal
+              "surface": "#123035", // Slightly lighter Teal for panels
+              "surface-border": "#1D454B",
+              "text-main": "#F5F7F7", // Off-white
+              "muted": "#567C82", // Slate Teal
+              "accent": "#E8C868", // Bright Gold hover
+              "error": "#D45B37",
+            },
+            fontFamily: {
+              "display": ["Outfit", "sans-serif"],
+              "heading": ["Outfit", "sans-serif"],
+              "body": ["Outfit", "sans-serif"],
+              "mono": ["JetBrains Mono", "monospace"],
+            },
+            borderRadius: {
+              "DEFAULT": "0", 
+              "sm": "0",
+              "lg": "0", 
+              "xl": "0", 
+              "full": "9999px"
+            },
+            animation: {
+              'radar-sweep': 'spin 4s linear infinite',
+              'pulse-fast': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom styles for telemetry dashboard feel */
+        .input-group {
+            position: relative;
+            padding-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        .telemetry-input {
+            width: 100%;
+            height: 48px;
+            background: rgba(11, 39, 44, 0.5);
+            border: 1px solid theme('colors.surface-border');
+            color: theme('colors.primary');
+            font-family: theme('fontFamily.mono');
+            font-size: 14px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+        
+        .telemetry-input:focus {
+            outline: none;
+            border-color: theme('colors.primary');
+            box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.1), 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+        
+        .telemetry-input.error {
+            border-color: theme('colors.error');
+            color: theme('colors.error');
+        }
+
+        .floating-label {
+            position: absolute;
+            top: 36px;
+            left: 16px;
+            color: theme('colors.muted');
+            font-family: theme('fontFamily.mono');
+            font-size: 14px;
+            pointer-events: none;
+            transition: all 0.2s ease-out;
+            letter-spacing: 0.05em;
+        }
+
+        /* Float the label when input is focused or has value */
+        .telemetry-input:focus ~ .floating-label,
+        .telemetry-input:not(:placeholder-shown) ~ .floating-label {
+            top: 0px;
+            left: 0px;
+            font-size: 11px;
+            color: theme('colors.primary');
+            text-transform: uppercase;
+        }
+
+        .telemetry-input.error:focus ~ .floating-label,
+        .telemetry-input.error:not(:placeholder-shown) ~ .floating-label {
+             color: theme('colors.error');
+        }
+
+        .btn-telemetry {
+            background-color: transparent;
+            border: 1px solid theme('colors.primary');
+            color: theme('colors.primary');
+            font-family: theme('fontFamily.mono');
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-telemetry::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-telemetry:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-telemetry:hover::before {
+            left: 100%;
+        }
+
+        /* Technical Grid Background */
+        .bg-tech-grid {
+            background-size: 50px 50px, 10px 10px;
+            background-image: 
+                linear-gradient(to right, rgba(86, 124, 130, 0.15) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(86, 124, 130, 0.15) 1px, transparent 1px),
+                linear-gradient(to right, rgba(86, 124, 130, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(86, 124, 130, 0.05) 1px, transparent 1px);
+        }
+
+        /* Crosshairs */
+        .crosshair-h {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.2);
+            pointer-events: none;
+        }
+        .crosshair-v {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: rgba(212, 175, 55, 0.2);
+            pointer-events: none;
+        }
+
+        .corner-bracket {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: theme('colors.surface-border');
+            border-style: solid;
+            pointer-events: none;
+        }
+        .cb-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .cb-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+        .cb-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+        .cb-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+    </style>
+</head>
+<body class="bg-background-dark text-text-main font-body h-screen w-screen overflow-hidden antialiased">
+<!-- Full Screen Layout -->
+<div class="flex h-full w-full relative">
+<!-- Global Crosshairs -->
+<div class="crosshair-h hidden lg:block z-0"></div>
+<div class="crosshair-v hidden lg:block z-0"></div>
+<!-- Left Pane: Brand Immersion (60%) -->
+<div class="hidden lg:flex w-[60%] bg-background-dark relative flex-col items-center justify-center overflow-hidden border-r border-surface-border">
+<!-- Geometric Grid Background -->
+<div class="absolute inset-0 bg-tech-grid opacity-70"></div>
+<!-- Data Overlay Corners -->
+<div class="absolute top-8 left-8 text-muted font-mono text-xs opacity-50">SYS.ON // LAT: 45.9128° N // LON: 12.3359° E</div>
+<div class="absolute bottom-8 right-8 text-muted font-mono text-xs opacity-50">OP_MODE: STANDBY // CALIBRATED</div>
+<!-- Fading Edges for the grid -->
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-background-dark/60 to-background-dark z-0"></div>
+<!-- Brand Content Container -->
+<div class="relative z-10 flex flex-col items-center">
+<!-- Animated Concentric Radar Logo -->
+<div class="relative w-80 h-80 mb-16 flex items-center justify-center">
+<!-- Central Dot -->
+<div class="absolute w-2 h-2 bg-primary rounded-full z-30 shadow-[0_0_10px_rgba(212,175,55,0.8)]"></div>
+<!-- Radar Sweep -->
+<div class="absolute inset-0 rounded-full border-r-2 border-t-2 border-transparent shadow-[inset_-15px_15px_30px_-15px_rgba(212,175,55,0.3)] animate-radar-sweep z-20"></div>
+<!-- Outer Ring (2px) -->
+<svg class="absolute z-10 w-full h-full text-primary opacity-30 animate-[spin_60s_linear_infinite]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="48" stroke-dasharray="1 6"></circle>
+</svg>
+<!-- Mid Ring 1 (1px) -->
+<svg class="absolute z-10 w-full h-full text-primary opacity-50 animate-[spin_40s_linear_infinite_reverse]" fill="none" stroke="currentColor" stroke-width="1" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="38"></circle>
+<!-- Diamond Segments -->
+<path d="M50 8 L54 12 L50 16 L46 12 Z"></path>
+<path d="M50 84 L54 88 L50 92 L46 88 Z"></path>
+<path d="M8 50 L12 54 L16 50 L12 46 Z"></path>
+<path d="M84 50 L88 54 L92 50 L88 46 Z"></path>
+</svg>
+<!-- Mid Ring 2 (2px dashed) -->
+<svg class="absolute z-10 w-full h-full text-muted opacity-80" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="28" stroke-dasharray="8 4"></circle>
+<!-- Tick marks -->
+<path class="text-primary" d="M50 20 L50 22 M50 78 L50 80 M20 50 L22 50 M78 50 L80 50" stroke-width="2"></path>
+</svg>
+<!-- Inner Ring (1px with diamonds) -->
+<svg class="absolute z-10 w-full h-full text-primary opacity-60 animate-[spin_20s_linear_infinite]" fill="none" stroke="currentColor" stroke-width="1" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="18" stroke-dasharray="2 2"></circle>
+<path d="M50 28 L52 32 L50 36 L48 32 Z"></path>
+<path d="M50 64 L52 68 L50 72 L48 68 Z"></path>
+</svg>
+<!-- Crosshair Lines -->
+<div class="absolute w-full h-[1px] bg-muted opacity-40"></div>
+<div class="absolute h-full w-[1px] bg-muted opacity-40"></div>
+</div>
+<!-- Brand Typography -->
+<div class="text-center relative">
+<div class="absolute -left-12 top-2 w-8 h-[1px] bg-primary/50"></div>
+<div class="absolute -right-12 top-2 w-8 h-[1px] bg-primary/50"></div>
+<h1 class="font-display font-medium text-4xl tracking-[0.2em] text-text-main mb-2 uppercase">Precision<span class="text-primary">Compass</span></h1>
+<p class="font-mono text-muted text-sm tracking-widest uppercase">Global Telemetry Interface</p>
+</div>
+</div>
+</div>
+<!-- Right Pane: Login Form (40% on Desktop, 100% on Mobile/Tablet) -->
+<div class="w-full lg:w-[40%] bg-background-dark flex flex-col items-center justify-center relative z-10 p-8 sm:p-12">
+<div class="absolute inset-0 bg-tech-grid opacity-30 lg:opacity-0 pointer-events-none"></div>
+<div class="w-full max-w-md relative">
+<!-- Telemetry Panel Container -->
+<div class="bg-surface p-8 sm:p-10 border border-surface-border relative shadow-2xl">
+<!-- Corner Brackets -->
+<div class="corner-bracket cb-tl"></div>
+<div class="corner-bracket cb-tr"></div>
+<div class="corner-bracket cb-bl"></div>
+<div class="corner-bracket cb-br"></div>
+<!-- Mobile Logo / Header -->
+<div class="lg:hidden flex flex-col items-center mb-10">
+<div class="relative w-20 h-20 mb-4 flex items-center justify-center">
+<div class="absolute w-1 h-1 bg-primary rounded-full z-30"></div>
+<svg class="absolute z-10 w-full h-full text-primary opacity-50" fill="none" stroke="currentColor" stroke-width="1" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="48" stroke-dasharray="2 4"></circle>
+<circle cx="50" cy="50" r="28"></circle>
+<path d="M50 18 L54 22 L50 26 L46 22 Z"></path>
+<path d="M50 74 L54 78 L50 82 L46 78 Z"></path>
+</svg>
+<div class="absolute w-full h-[1px] bg-muted opacity-40"></div>
+<div class="absolute h-full w-[1px] bg-muted opacity-40"></div>
+</div>
+<h1 class="font-display font-medium text-2xl tracking-[0.15em] text-text-main uppercase">Precision<span class="text-primary">Compass</span></h1>
+</div>
+<div class="mb-8">
+<h2 class="text-xl font-display font-medium text-text-main tracking-wider uppercase mb-1 flex items-center gap-2">
+<span class="w-2 h-2 bg-primary block animate-pulse"></span>
+                    Authentication Reqd
+                </h2>
+<p class="text-muted text-xs font-mono uppercase tracking-widest">Identify to access telemetry</p>
+</div>
+<form action="#" class="space-y-6" method="POST">
+<div class="input-group">
+<input class="telemetry-input peer" id="email" name="email" placeholder=" " required="" type="email"/>
+<label class="floating-label" for="email">Operative ID (Email)</label>
+<div class="absolute right-3 top-[36px] text-muted peer-focus:text-primary material-symbols-outlined text-sm">fingerprint</div>
+</div>
+<div class="input-group">
+<input class="telemetry-input peer" id="password" name="password" placeholder=" " required="" type="password"/>
+<label class="floating-label" for="password">Passcode</label>
+<div class="absolute right-3 top-[36px] text-muted peer-focus:text-primary material-symbols-outlined text-sm">lock</div>
+</div>
+<div class="flex items-center justify-between mt-6">
+<div class="flex items-center">
+<input class="h-4 w-4 bg-background-dark border-surface-border text-primary focus:ring-primary focus:ring-offset-background-dark rounded-none" id="remember-me" name="remember-me" type="checkbox"/>
+<label class="ml-2 block text-xs font-mono uppercase text-muted" for="remember-me">
+                            Maintain Link
+                        </label>
+</div>
+<div class="text-xs font-mono uppercase">
+<a class="text-muted hover:text-primary transition-colors" href="#">
+                            Reset Cipher
+                        </a>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full btn-telemetry py-4 flex items-center justify-center gap-2" type="submit">
+                        Initialize Connection
+                        <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+</button>
+</div>
+</form>
+<!-- Status Indicator -->
+<div class="mt-8 pt-4 border-t border-surface-border/50 flex justify-between items-center text-[10px] font-mono text-muted uppercase">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+                    Network SECURE
+                </div>
+<div>v.4.2.9_build.118</div>
+</div>
+</div>
+<!-- Registration link -->
+<p class="mt-8 text-center text-xs font-mono uppercase text-muted">
+            Unregistered Operative? 
+            <a class="text-primary hover:text-accent font-semibold ml-1 border-b border-primary/30 hover:border-primary transition-colors pb-0.5" href="#">Request Access</a>
+</p>
+</div>
+</div>
+</div>
+</body></html>
