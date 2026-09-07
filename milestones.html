@@ -23,7 +23,12 @@
 
 <nav id="siteNav">
   <div class="nav-wordmark"><a href="/" style="color: inherit;">Hina Ajaz</a></div>
-  <ul class="nav-links">
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="/#journey">Experience</a></li>
     <li><a href="/#credentials">Education</a></li>
     <li><a href="/#skills">Capabilities</a></li>
@@ -160,6 +165,20 @@
     if (window.scrollY > 40) nav.classList.add('scrolled');
     else nav.classList.remove('scrolled');
   });
+
+  // Mobile / Tablet Nav Toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  const setNavOpen = (open) => {
+    navLinks.classList.toggle('is-open', open);
+    navToggle.classList.toggle('is-open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+  };
+  navToggle.addEventListener('click', () => setNavOpen(!navLinks.classList.contains('is-open')));
+  navLinks.addEventListener('click', (e) => { if (e.target.tagName === 'A') setNavOpen(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setNavOpen(false); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 1024) setNavOpen(false); });
 
   // Background Line Drawing Effect
   const bgLines = document.getElementById('bg-lines');
