@@ -1,262 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hina Ajaz — Let's Make History</title>
-<meta name="description" content="Five milestones in genomics and public health, 2018 to now. Portfolio of Hina Ajaz, Senior Project Manager and Scrum Master.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#101418;
-    --ink-soft:#2c343c;
-    --paper:#f7f5f0;
-    --paper-2:#efece4;
-    --rule:#d8d3c7;
-    --emerald:#0b3d2e;
-    --emerald-light:#1f6f52;
-    --gold:#9a7b31;
-    --gold-lift:#c9a44c;
-    --muted:#6b7078;
-    --display:"Cormorant Garamond",Georgia,serif;
-    --text:"Inter",system-ui,-apple-system,sans-serif;
-    --measure:72ch;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--text);font-size:17px;line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{width:min(1120px,92vw);margin-inline:auto}
-  a{color:inherit}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
-
-  /* ---------- nav ---------- */
-  .nav{
-    position:sticky;top:0;z-index:20;background:rgba(247,245,240,.92);
-    backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);
-  }
-  .nav .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:.9rem 0}
-  .brand{font-family:var(--display);font-size:1.45rem;letter-spacing:.01em;text-decoration:none}
-  .nav ul{display:flex;gap:1.6rem;list-style:none;margin:0;padding:0;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-  .nav a{text-decoration:none}
-  .nav a:hover{color:var(--emerald)}
-  @media(max-width:660px){.nav ul{display:none}}
-
-  /* ---------- hero ---------- */
-  .hero{padding:clamp(4rem,11vw,9rem) 0 clamp(3rem,7vw,5rem);position:relative;overflow:hidden}
-  .eyebrow{
-    font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--emerald);margin:0 0 1.4rem
-  }
-  .hero h1{
-    font-family:var(--display);font-weight:300;
-    font-size:clamp(3.4rem,12vw,8.5rem);line-height:.92;letter-spacing:-.02em;
-    margin:0 0 1.6rem;max-width:14ch;
-  }
-  .hero h1 em{font-style:italic;color:var(--emerald)}
-  .hero p{max-width:52ch;font-size:1.06rem;color:var(--ink-soft);margin:0 0 2.2rem}
-  .hero-meta{display:flex;flex-wrap:wrap;gap:.6rem 2.2rem;font-size:.83rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--rule);padding-top:1.2rem;max-width:52ch}
-
-  .helix{position:absolute;right:-6%;top:0;height:100%;width:34%;opacity:.45;pointer-events:none}
-  @media(max-width:900px){.helix{display:none}}
-
-  /* ---------- milestones ---------- */
-  .milestones{padding:clamp(2rem,6vw,4rem) 0 2rem}
-  .section-head{border-top:2px solid var(--ink);padding-top:1rem;margin-bottom:clamp(2.5rem,6vw,4.5rem);display:flex;flex-wrap:wrap;gap:1rem 3rem;align-items:baseline;justify-content:space-between}
-  .section-head h2{font-family:var(--display);font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);margin:0}
-  .section-head p{margin:0;max-width:44ch;color:var(--muted);font-size:.95rem}
-
-  .m{
-    display:grid;grid-template-columns:7.5rem minmax(0,1fr);
-    gap:0 clamp(1.5rem,4vw,3.5rem);
-    padding:clamp(2.5rem,5vw,3.75rem) 0;border-top:1px solid var(--rule);
-  }
-  .m:last-of-type{border-bottom:1px solid var(--rule)}
-  .m-year{
-    font-family:var(--display);font-size:1.6rem;color:var(--emerald);
-    line-height:1.1;padding-top:.35rem;
-  }
-  .m-year span{display:block;font-family:var(--text);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
-  .m-body{min-width:0}
-  .m-hook{
-    font-family:var(--display);font-style:italic;font-weight:400;
-    font-size:clamp(1.6rem,3.6vw,2.35rem);line-height:1.18;margin:0 0 .7rem;
-  }
-  .m-sum{font-size:1.02rem;color:var(--ink-soft);margin:0 0 1.5rem;max-width:var(--measure)}
-  .m-role{font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 1.1rem}
-  .m-body ul{margin:0;padding:0;list-style:none;max-width:var(--measure)}
-  .m-body li{position:relative;padding-left:1.35rem;margin-bottom:.8rem;font-size:.97rem}
-  .m-body li::before{content:"";position:absolute;left:0;top:.72em;width:.6rem;height:1px;background:var(--gold)}
-  .source{display:inline-block;margin-top:.4rem;font-size:.85rem;color:var(--emerald);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
-  .source:hover{border-bottom-color:var(--emerald)}
-
-  @media(max-width:900px){
-    .m{grid-template-columns:1fr;gap:1.25rem}
-    .m-year{padding-top:0;display:flex;align-items:baseline;gap:.9rem}
-    .m-year span{margin-top:0}
-  }
-
-  /* ---------- cta ---------- */
-  .cta{background:var(--emerald);color:var(--paper);margin-top:clamp(3rem,8vw,6rem);padding:clamp(4rem,10vw,7rem) 0}
-  .cta h2{font-family:var(--display);font-weight:300;font-size:clamp(2.6rem,8vw,5.5rem);line-height:1;margin:0 0 1.4rem;max-width:16ch}
-  .cta h2 em{font-style:italic;color:var(--gold-lift)}
-  .cta p{max-width:48ch;color:#c6c9cd;margin:0 0 2.4rem}
-  .cta .eyebrow{color:var(--gold-lift)}
-  .links{display:flex;flex-wrap:wrap;gap:1rem}
-  .btn{
-    display:inline-block;padding:.85rem 1.9rem;text-decoration:none;font-size:.85rem;
-    letter-spacing:.09em;text-transform:uppercase;border:1px solid var(--gold-lift);color:var(--gold-lift);
-    transition:background .18s ease,color .18s ease;
-  }
-  .btn:hover{background:var(--gold-lift);color:var(--ink)}
-  .btn.solid{background:var(--gold-lift);color:var(--ink)}
-  .btn.solid:hover{background:transparent;color:var(--gold-lift)}
-  footer{padding:2rem 0;font-size:.82rem;color:var(--muted);border-top:1px solid var(--rule)}
-  footer .wrap{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milestones — Hina Ajaz</title>
+  <meta name="description" content="Five milestones in genomics and public health, 2018 to now. Portfolio of Hina Ajaz, Senior Project Manager & Scrum Master.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav class="nav">
-  <div class="wrap">
-    <a class="brand" href="#top">Hina Ajaz</a>
-    <ul>
-      <li><a href="#milestones">Milestones</a></li>
-      <li><a href="/#journey">Full résumé</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
+<!-- The Skyscraper Background Effect -->
+<div class="bg-lines" id="bg-lines">
+  <div class="bg-line"></div>
+  <div class="bg-line"></div>
+  <div class="bg-line" style="height: 80%; align-self: flex-end;"></div>
+  <div class="bg-line"></div>
+  <div class="bg-line"></div>
+</div>
+
+<nav id="siteNav">
+  <div class="nav-wordmark"><a href="/" style="color: inherit;">Hina Ajaz</a></div>
+  <ul class="nav-links">
+    <li><a href="/#journey">Experience</a></li>
+    <li><a href="/#credentials">Education</a></li>
+    <li><a href="/#skills">Capabilities</a></li>
+    <li><a href="/milestones">Milestones</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
-<header class="hero" id="top">
-  <svg class="helix" viewBox="0 0 200 900" fill="none" aria-hidden="true">
-    <g stroke="#0b3d2e" stroke-width="1.2" opacity=".5">
-      <path d="M40 0 C160 110, 160 220, 40 330 C-80 440, -80 550, 40 660 C160 770, 160 880, 40 900"/>
-      <path d="M160 0 C40 110, 40 220, 160 330 C280 440, 280 550, 160 660 C40 770, 40 880, 160 900"/>
-      <path d="M62 60 H138 M44 130 H156 M44 220 H156 M62 290 H138 M62 360 H138 M44 430 H156 M44 520 H156 M62 590 H138 M62 660 H138 M44 730 H156 M44 820 H156"/>
-    </g>
-  </svg>
-  <div class="wrap">
-    <p class="eyebrow">Portfolio · 2018 — 2026</p>
-    <h1>Let's make <em>history</em>.</h1>
-    <p>Eight years of program leadership at the point where genomic science meets public health — census improvements, pharmacogenomics for veterans, long-read sequencing, and the AI agents that keep it all documented.</p>
-    <div class="hero-meta">
-      <span>Senior Project Manager</span>
-      <span>PMP · LSSYB · CSM · CPHQ</span>
-      <span>Dallas–Fort Worth</span>
-    </div>
-  </div>
+<!-- HERO -->
+<header class="hero hero-compact container">
+  <div class="eyebrow reveal">Portfolio <span style="margin: 0 10px;">|</span> 2018 — 2026</div>
+  <h1 class="name reveal">Let's Make History</h1>
+  <div class="role-line reveal">Five Firsts in Genomics &amp; Public Health</div>
+  <p class="lede reveal">
+    Eight years of program leadership at the point where genomic science meets public health — census improvements, pharmacogenomics for veterans, long-read sequencing, and the AI agents that keep it all documented.
+  </p>
 </header>
 
-<main class="milestones wrap" id="milestones">
-  <div class="section-head">
-    <h2>Five milestones</h2>
-    <p>Each one was a first — for a company, for a county, or for the field.</p>
-  </div>
+<!-- MILESTONES -->
+<section id="milestones" class="container">
+  <div class="eyebrow reveal">Career Highlights</div>
+  <h2 class="reveal">Five Milestones</h2>
+  <p class="section-lede reveal">Each one was a first — for a company, for a county, or for the field.</p>
 
-  <!-- 1 -->
-  <article class="m">
-    <div class="m-year">2018<span>The Pill Club</span></div>
-    <div class="m-body">
-      <h3 class="m-hook">I did telehealth before it was cool.</h3>
-      <p class="m-sum">Ran patient operations at one of the first Texas-based retail pharmacies for women's health — a telehealth model years before the pandemic made remote care ordinary.</p>
-      <p class="m-role">San Francisco, CA · The Pill Club · Patient Manager</p>
-      <ul>
+  <div class="milestone-list">
+
+    <article class="milestone-card reveal">
+      <div class="milestone-head">
+        <span class="milestone-year">2018</span>
+        <span class="milestone-org">The Pill Club</span>
+      </div>
+      <h3 class="milestone-hook">I did telehealth before it was cool.</h3>
+      <p class="milestone-sum">Ran patient operations at one of the first Texas-based retail pharmacies for women's health — a telehealth model years before the pandemic made remote care ordinary.</p>
+      <div class="milestone-role">San Francisco, CA <span style="margin: 0 8px;">|</span> Patient Manager</div>
+      <ul class="timeline-bullets">
         <li>Helped stand up one of the first Texas-based retail pharmacies for women's health, built around a telehealth-first model.</li>
         <li>Managed a team of 8 patient care coordinators onboarding an average of 12,000 patients per week.</li>
         <li>Partnered with engineering and logistics to automate refill requests, cutting prescription wait time by 5 days.</li>
       </ul>
-    </div>
-  </article>
+    </article>
 
-  <!-- 2 -->
-  <article class="m">
-    <div class="m-year">2020<span>Emgage Action</span></div>
-    <div class="m-body">
-      <h3 class="m-hook">It's hard to make the census fun. I did it anyway.</h3>
-      <p class="m-sum">Applied Lean methodology to U.S. Census phone banking and pushed Tarrant County past the state average — a first-of-its-kind approach that drew national recognition.</p>
-      <p class="m-role">Health Policy Intern · Dallas, TX · Jun 2020 – Jan 2021</p>
-      <ul>
+    <article class="milestone-card reveal">
+      <div class="milestone-head">
+        <span class="milestone-year">2020</span>
+        <span class="milestone-org">Emgage Action</span>
+      </div>
+      <h3 class="milestone-hook">It's hard to make the census fun. I did it anyway.</h3>
+      <p class="milestone-sum">Applied Lean methodology to U.S. Census phone banking and pushed Tarrant County past the state average — a first-of-its-kind approach that drew national recognition.</p>
+      <div class="milestone-role">Dallas, TX <span style="margin: 0 8px;">|</span> Health Policy Intern <span style="margin: 0 8px;">|</span> Jun 2020 – Jan 2021</div>
+      <ul class="timeline-bullets">
         <li>Redesigned the phone banking protocol with Lean process mapping, reaching a 48.8% completion rate in Tarrant County.</li>
         <li>Exceeded Texas state averages in one of the hardest-to-count regions in the country.</li>
         <li>Received recognition from the US Census Bureau.</li>
       </ul>
-    </div>
-  </article>
+    </article>
 
-  <!-- 3 -->
-  <article class="m">
-    <div class="m-year">2021<span>SPH Analytics</span></div>
-    <div class="m-body">
-      <h3 class="m-hook">Healthcare quality, measured for the people usually left out of the data.</h3>
-      <p class="m-sum">Turned survey and benchmarking programs into research that reached elderly, long-term care, and CHIP/Medicaid populations — while holding a 98% on-time delivery record.</p>
-      <p class="m-role">Project Manager, a Press Ganey solution · Dallas, TX · 2021 – 2022</p>
-      <ul>
+    <article class="milestone-card reveal">
+      <div class="milestone-head">
+        <span class="milestone-year">2021</span>
+        <span class="milestone-org">SPH Analytics</span>
+      </div>
+      <h3 class="milestone-hook">Healthcare quality, measured for the people usually left out of the data.</h3>
+      <p class="milestone-sum">Turned survey and benchmarking programs into research that reached elderly, long-term care, and CHIP/Medicaid populations — while holding a 98% on-time delivery record.</p>
+      <div class="milestone-role">Dallas, TX <span style="margin: 0 8px;">|</span> Project Manager, a Press Ganey Solution <span style="margin: 0 8px;">|</span> 2021 – 2022</div>
+      <ul class="timeline-bullets">
         <li>Primary contact for 20+ key accounts including C-suite executives and marketing directors, translating partner needs into custom healthcare survey and data solutions.</li>
         <li>Directed the full lifecycle of 10–15 concurrent client engagements — scope, deliverables, issue resolution, risk — at 98% on-time delivery against contract commitments.</li>
         <li>Led project teams coordinating research studies for vulnerable populations, including elderly, long-term living, and CHIP/Medicaid recipients.</li>
       </ul>
-    </div>
-  </article>
+    </article>
 
-  <!-- 4 -->
-  <article class="m">
-    <div class="m-year">2022<span>Baylor Genetics</span></div>
-    <div class="m-body">
-      <h3 class="m-hook">Led strategic initiatives to drive growth from 300 to 800 employees while managing quality expectations and securing new research opportunities.</h3>
-      <p class="m-sum">Led the company's first pharmacogenomic program end to end — grant writing, six departments, regulatory compliance, and the workflow optimization that followed.</p>
-      <p class="m-role">Business Alignment Project Manager · Dallas, TX · Oct 2022 – Jul 2024</p>
-      <ul>
+    <article class="milestone-card reveal">
+      <div class="milestone-head">
+        <span class="milestone-year">2022</span>
+        <span class="milestone-org">Baylor Genetics</span>
+      </div>
+      <h3 class="milestone-hook">Led strategic initiatives to drive growth from 300 to 800 employees while managing quality expectations and securing new research opportunities.</h3>
+      <p class="milestone-sum">Led the company's first pharmacogenomic program end to end — grant writing, six departments, regulatory compliance, and the workflow optimization that followed.</p>
+      <div class="milestone-role">Dallas, TX <span style="margin: 0 8px;">|</span> Business Alignment Project Manager <span style="margin: 0 8px;">|</span> Oct 2022 – Jul 2024</div>
+      <ul class="timeline-bullets">
         <li>Directed a multi-million-dollar PGx product development initiative across 6 departments — Market Access, Product, Clinical Genomics, IT, Sales, and Legal — to minimize risk and hold regulatory compliance on genomic research data programs.</li>
         <li>Led a Salesforce CRM rollout across 3 service lines with Sales, IT, and Marketing, completing the transition 2 weeks ahead of schedule.</li>
         <li>Built a master tracking system covering 36 cross-functional projects in a unified Smartsheet dashboard for executive transparency — and planned a 5-day Lab Week for 300+ staff on a $50K budget, securing $15K in vendor sponsorships.</li>
       </ul>
-      <a class="source" href="https://www.tmc.edu/press-releases/baylor-genetics-launches-pharmacogenomic-and-germline-genetic-testing-for-the-u-s-department-of-veterans-affairs/">Where the PGx program landed: Baylor Genetics wins a multi-year VA national contract →</a>
-    </div>
-  </article>
+      <a class="article-link" href="https://www.tmc.edu/press-releases/baylor-genetics-launches-pharmacogenomic-and-germline-genetic-testing-for-the-u-s-department-of-veterans-affairs/" target="_blank" rel="noopener">
+        <span class="article-link-label">Read More <span style="margin: 0 6px;">|</span> TMC.edu</span>
+        <span class="article-link-title">Where the PGx program landed: Baylor Genetics wins a multi-year VA national contract</span>
+        <span class="article-link-arrow" aria-hidden="true">→</span>
+      </a>
+    </article>
 
-  <!-- 5 -->
-  <article class="m">
-    <div class="m-year">2024<span>Baylor Genetics</span></div>
-    <div class="m-body">
-      <h3 class="m-hook">Two weeks to two days — and 30 minutes of documentation down to one.</h3>
-      <p class="m-sum">Building AI agents into clinical program delivery while helping ship the multimodal sequencing work that expanded what a whole genome test can answer.</p>
-      <p class="m-role">Senior Project Manager / Scrum Master · Dallas, TX · Jul 2024 – Present</p>
-      <ul>
+    <article class="milestone-card reveal">
+      <div class="milestone-head">
+        <span class="milestone-year">2024</span>
+        <span class="milestone-org">Baylor Genetics</span>
+      </div>
+      <h3 class="milestone-hook">Two weeks to two days — and 30 minutes of documentation down to one.</h3>
+      <p class="milestone-sum">Building AI agents into clinical program delivery while helping ship the multimodal sequencing work that expanded what a whole genome test can answer.</p>
+      <div class="milestone-role">Dallas, TX <span style="margin: 0 8px;">|</span> Senior Project Manager / Scrum Master <span style="margin: 0 8px;">|</span> Jul 2024 – Present</div>
+      <ul class="timeline-bullets">
         <li>Designed and deployed an AI agent using large language models and agentic workflows to automate user story creation for VDI implementation projects across 5 departments, cutting requirement gathering and documentation from 30 minutes to 1 minute per request — a 97% reduction.</li>
         <li>Worked directly on the optical genome mapping and long-read sequencing rollout that expanded short tandem repeat coverage from 29 to 58 genes and added FMR1 methylation analysis for Fragile X.</li>
         <li>Led an end-to-end customer service automation initiative improving response time by 80%, and rolled out a company-wide PM training guide adopted by 600+ employees.</li>
         <li>Worked with the wet lab automation team to ensure all robots are operational, using a real-time Jira ticketing system.</li>
       </ul>
-      <a class="source" href="https://www.baylorgenetics.com/?p=28564">Baylor Genetics enhances its whole genome sequencing test with OGM and long-read sequencing →</a>
-    </div>
-  </article>
-</main>
+      <a class="article-link" href="https://www.baylorgenetics.com/?p=28564" target="_blank" rel="noopener">
+        <span class="article-link-label">Read More <span style="margin: 0 6px;">|</span> BaylorGenetics.com</span>
+        <span class="article-link-title">Baylor Genetics enhances its whole genome sequencing test with OGM and long-read sequencing</span>
+        <span class="article-link-arrow" aria-hidden="true">→</span>
+      </a>
+    </article>
 
-<section class="cta" id="contact">
-  <div class="wrap">
-    <p class="eyebrow">What's next</p>
-    <h2>Let's make <em>history</em> together.</h2>
-    <p>If you're building something at the edge of genomics, clinical operations, or applied AI — I'd like to hear about it.</p>
-    <div class="links">
-      <a class="btn solid" href="mailto:ajazhina2@gmail.com?subject=Let%27s%20make%20history%20together">Email Hina</a>
-      <a class="btn" href="https://www.linkedin.com/in/hinaajaz">Connect on LinkedIn</a>
-    </div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <span>Hina Ajaz — DFW, TX</span>
-    <span><a href="/">Back to résumé →</a></span>
+<!-- CLOSING / CONTACT -->
+<footer id="contact" class="page-footer container" style="padding-top: 180px; padding-bottom: 180px;">
+  <div class="reveal" style="text-align: center; max-width: 800px; width: 100%;">
+    <div class="eyebrow">What's Next</div>
+    <h2 style="font-size: 3rem; margin-bottom: 10px;">Let's Make History Together</h2>
+    <p class="section-lede" style="margin: 0 auto; max-width: 600px;">If you're building something at the edge of genomics, clinical operations, or applied AI — I'd like to hear about it.</p>
+
+    <div class="footer-cta-container">
+      <a href="https://www.linkedin.com/in/hinaajaz" target="_blank" rel="noopener" class="cta-btn">LinkedIn Profile</a>
+      <a href="/#journey" class="cta-btn">Full Résumé</a>
+    </div>
   </div>
 </footer>
+
+<script>
+  // Nav Background on Scroll
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Background Line Drawing Effect
+  const bgLines = document.getElementById('bg-lines');
+  window.addEventListener('load', () => {
+    bgLines.style.transition = 'opacity 1.5s ease-in';
+    bgLines.style.opacity = '0.3';
+  });
+
+  // Reveal Animations on Scroll
+  const revealEls = document.querySelectorAll('.reveal');
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  } else {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => observer.observe(el));
+  }
+</script>
 
 </body>
 </html>
