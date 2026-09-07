@@ -1,2 +1,8 @@
 [build]
   publish = "."
+
+# Clean URL for the milestones page (/milestones -> /milestones.html)
+[[redirects]]
+  from = "/milestones"
+  to = "/milestones.html"
+  status = 200
